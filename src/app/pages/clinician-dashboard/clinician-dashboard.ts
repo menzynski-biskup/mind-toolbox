@@ -17,7 +17,7 @@ export class ClinicianDashboardComponent implements OnInit {
 
   // simple form model
   newName = '';
-  newAge: number | null = null;
+  newDateBirth: Date | null = null;
 
   constructor(private patientService: PatientService) {}
 
@@ -31,6 +31,7 @@ export class ClinicianDashboardComponent implements OnInit {
     try {
       this.patients = await this.patientService.getPatients();
     } catch (e) {
+      console.error('ClinicianDashboard: failed to load patients:', e);
       this.error = 'Could not load patients.';
     } finally {
       this.loading = false;
@@ -42,15 +43,16 @@ export class ClinicianDashboardComponent implements OnInit {
     try {
       await this.patientService.addPatient({
         name: this.newName,
-        age: this.newAge,
+        date_birth: this.newDateBirth,
         sex: null,
         last_assessment: null,
         status: 'New',
       });
       this.newName = '';
-      this.newAge = null;
+      this.newDateBirth = null;
       await this.loadPatients();
     } catch (e) {
+      console.error('ClinicianDashboard: failed to add patient:', e);
       this.error = 'Could not add patient.';
     }
   }

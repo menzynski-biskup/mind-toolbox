@@ -5,7 +5,7 @@ import { supabase } from './supabase.client';
 export interface Patient {
   id: string;
   name: string;
-  age: number | null;
+  date_birth: Date | null;
   sex: string | null;
   last_assessment: string | null; // ISO date
   status: string | null;
@@ -14,24 +14,34 @@ export interface Patient {
 @Injectable({ providedIn: 'root' })
 export class PatientService {
   async getPatients(): Promise<Patient[]> {
-    const { data, error } = await supabase
-      .from('patients')
-      .select('*')
-      .order('created_at', { ascending: false });
+    try {
+      const { data, error } = await supabase
+        .from('patients')
+        .select('*')
+        .order('created_at', { ascending: false });
 
-    if (error) {
-      console.error('Error loading patients:', error);
+      if (error) {
+        console.error('Error loading patients (Supabase returned error):', error);
+        return [];
+      }
+
+      return (data as Patient[]) ?? [];
+    } catch (err) {
+      console.error('Error loading patients (exception):', err);
       return [];
     }
-
-    return data as Patient[];
   }
 
   async addPatient(patient: Omit<Patient, 'id'>): Promise<void> {
-    const { error } = await supabase.from('patients').insert(patient);
-    if (error) {
-      console.error('Error adding patient:', error);
-      throw error;
+    try {
+      const { error } = await supabase.from('patients').insert(patient);
+      if (error) {
+        console.error('Error adding patient (Supabase returned error):', error);
+        throw error;
+      }
+    } catch (err) {
+      console.error('Error adding patient (exception):', err);
+      throw err;
     }
   }
 }

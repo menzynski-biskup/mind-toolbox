@@ -20,10 +20,10 @@
         required
       />
       <input
-        type="number"
-        placeholder="Age"
-        [(ngModel)]="newAge"
-        name="age"
+        type="date"
+        placeholder="Date of birth"
+        [(ngModel)]="newDateBirth"
+        name="date_birth"
         min="0"
       />
       <button type="submit">Add</button>
@@ -41,7 +41,7 @@
       <thead>
         <tr>
           <th>Name</th>
-          <th>Age</th>
+          <th>Date of birth</th>
           <th>Sex</th>
           <th>Last assessment</th>
           <th>Status</th>
@@ -50,7 +50,7 @@
       <tbody>
         <tr *ngFor="let p of patients">
           <td>{{ p.name }}</td>
-          <td>{{ p.age ?? '—' }}</td>
+          <td>{{ p.date_birth ?? '—' }}</td>
           <td>{{ p.sex ?? '—' }}</td>
           <td>{{ p.last_assessment ?? '—' }}</td>
           <td>{{ p.status ?? '—' }}</td>
