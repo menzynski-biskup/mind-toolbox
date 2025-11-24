@@ -41,7 +41,6 @@ export class ClinicianDashboardComponent implements OnInit {
     if (!this.newName) return;
     try {
       await this.patientService.addPatient({
-        id: '' as any, // will be ignored by Supabase
         name: this.newName,
         age: this.newAge,
         sex: null,
