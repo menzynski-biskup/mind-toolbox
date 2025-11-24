@@ -1,25 +1,40 @@
-<div class="auth-container">
-  <h1>MIND – Neuro Platform</h1>
-  <p>Select how you want to enter:</p>
+<div class="login">
+  <div class="login__surface">
+    <header class="login__header">
+      <span class="login__logo" aria-hidden="true">M</span>
+      <div>
+        <h1 class="login__title">MIND Platform</h1>
+        <p class="login__subtitle">Choose your workspace to access neuro insights.</p>
+      </div>
+    </header>
 
-  <form>
-    <div>
-      <label for="email">Email</label><br />
-      <input id="email" type="email" placeholder="you@example.com" />
-    </div>
+    <form class="login__form">
+      <div class="login__field">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          placeholder="you@example.com"
+          autocomplete="email"
+        />
+      </div>
 
-    <div style="margin-top: 0.5rem">
-      <label for="password">Password</label><br />
-      <input id="password" type="password" placeholder="••••••••" />
-    </div>
+      <div class="login__field">
+        <label for="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          placeholder="••••••••"
+          autocomplete="current-password"
+        />
+      </div>
 
-    <div style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
-      <button type="button" (click)="goClinician()">Log in as Clinician</button>
-      <button type="button" (click)="goResearcher()">Log in as Researcher</button>
-    </div>
-  </form>
+      <div class="login__actions">
+        <button type="button" class="login__btn login__btn--primary" (click)="goClinician()">Clinician</button>
+        <button type="button" class="login__btn login__btn--ghost" (click)="goResearcher()">Researcher</button>
+      </div>
+    </form>
 
-  <p style="margin-top: 1.5rem; font-size: 0.9rem; opacity: 0.7;">
-    Demo only – authentication is not wired up yet.
-  </p>
+    <p class="login__note">Demo only – authentication is not wired up yet.</p>
+  </div>
 </div>

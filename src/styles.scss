@@ -1,1 +1,16 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global layout resets to ensure full-viewport experiences */
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #ffffff;
+  font-family: 'Inter', 'Segoe UI', 'SF Pro Display', system-ui, -apple-system, sans-serif;
+}
+
+app-root {
+  min-height: 100%;
+  display: block;
+}
