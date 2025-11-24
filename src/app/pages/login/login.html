@@ -1,0 +1,25 @@
+<div class="auth-container">
+  <h1>MIND – Neuro Platform</h1>
+  <p>Select how you want to enter:</p>
+
+  <form>
+    <div>
+      <label for="email">Email</label><br />
+      <input id="email" type="email" placeholder="you@example.com" />
+    </div>
+
+    <div style="margin-top: 0.5rem">
+      <label for="password">Password</label><br />
+      <input id="password" type="password" placeholder="••••••••" />
+    </div>
+
+    <div style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+      <button type="button" (click)="goClinician()">Log in as Clinician</button>
+      <button type="button" (click)="goResearcher()">Log in as Researcher</button>
+    </div>
+  </form>
+
+  <p style="margin-top: 1.5rem; font-size: 0.9rem; opacity: 0.7;">
+    Demo only – authentication is not wired up yet.
+  </p>
+</div>
