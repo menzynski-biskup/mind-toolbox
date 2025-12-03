@@ -1,13 +1,17 @@
 name = "mind-frontend"
-compatibility_date = "2025-12-03"
 pages_build_output_dir = "dist/mind-frontend/browser"
-build_command = "npm run build"
-pages_build_watch_dir = [
+
+[build]
+command = "npm run build"
+watch_dir = [
   "src",
+  "public",
   "angular.json",
-  "package.json",
-  "public"
+  "package.json"
 ]
+
+[assets]
+directory = "dist/mind-frontend/browser"
 
 [vars]
 # Add runtime environment variables here, e.g.
