@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { KnowledgeArchitectureViewModel } from './knowledge-architecture.viewmodel';
 
 @Component({
   selector: 'app-knowledge-architecture-page',
@@ -7,5 +8,8 @@ import { CommonModule } from '@angular/common';
   templateUrl: './knowledge-architecture.html',
   styleUrl: './knowledge-architecture.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [KnowledgeArchitectureViewModel],
 })
-export class KnowledgeArchitecturePageComponent {}
+export class KnowledgeArchitecturePageComponent {
+  protected readonly vm = inject(KnowledgeArchitectureViewModel);
+}

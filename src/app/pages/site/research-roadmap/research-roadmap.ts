@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ResearchRoadmapViewModel } from './research-roadmap.viewmodel';
 
 @Component({
   selector: 'app-research-roadmap-page',
@@ -7,5 +8,8 @@ import { CommonModule } from '@angular/common';
   templateUrl: './research-roadmap.html',
   styleUrl: './research-roadmap.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ResearchRoadmapViewModel],
 })
-export class ResearchRoadmapPageComponent {}
+export class ResearchRoadmapPageComponent {
+  protected readonly vm = inject(ResearchRoadmapViewModel);
+}

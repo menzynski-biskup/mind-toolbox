@@ -1,68 +1,61 @@
 <article class="page-content" aria-labelledby="collaboration-title">
   <header>
-    <h1 id="collaboration-title" class="page-heading">Collaboration and Open Science</h1>
-    <p>Structures enabling interdisciplinary partnerships, data sharing, and open contribution pathways.</p>
+    <h1 id="collaboration-title" class="page-heading">{{ vm.page.hero.title }}</h1>
+    <p>{{ vm.page.hero.description }}</p>
     <div class="page-meta" aria-label="Page metadata">
-      <span class="meta-chip">Lead · Partnerships Office</span>
-      <span class="meta-chip meta-chip--muted">Status · Active</span>
+      @for (meta of vm.page.hero.meta; track meta) {
+        <span class="meta-chip">{{ meta }}</span>
+      }
     </div>
   </header>
 
   <section class="section-block" aria-labelledby="collaboration-models">
-    <h2 id="collaboration-models">Partnership Models</h2>
+    <h2 id="collaboration-models">{{ vm.page.sections[0].title }}</h2>
     <ul>
-      <li><strong>Academic Collaborations:</strong> Joint research agendas with shared governance representation.</li>
-      <li><strong>Clinical Partnerships:</strong> Clinical pathway co-design, shared evaluation metrics, and data governance agreements.</li>
-      <li><strong>Technology Contributors:</strong> API integrators and tool developers aligned with open licensing.</li>
+      @for (item of vm.page.sections[0].bullets; track item) {
+        <li [innerHTML]="item"></li>
+      }
     </ul>
   </section>
 
   <section class="section-block" aria-labelledby="collaboration-data">
-    <h2 id="collaboration-data">Data Sharing Policies</h2>
+    <h2 id="collaboration-data">{{ vm.page.sections[1].title }}</h2>
     <table>
-      <caption>Sharing Framework</caption>
+      <caption>{{ vm.page.sections[1].table?.caption }}</caption>
       <thead>
         <tr>
-          <th scope="col">Asset</th>
-          <th scope="col">Access Level</th>
-          <th scope="col">Review Process</th>
+          @for (header of vm.page.sections[1].table?.headers; track header) {
+            <th scope="col">{{ header }}</th>
+          }
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">Aggregated Datasets</th>
-          <td>Open with attribution</td>
-          <td>Automated license acceptance</td>
-        </tr>
-        <tr>
-          <th scope="row">De-identified Cohorts</th>
-          <td>Restricted to vetted collaborators</td>
-          <td>Governance board approval</td>
-        </tr>
-        <tr>
-          <th scope="row">Analysis Workflows</th>
-          <td>Open source under permissive license</td>
-          <td>Code review and CI compliance</td>
-        </tr>
+        @for (row of vm.page.sections[1].table?.rows; track row[0]) {
+          <tr>
+            <th scope="row">{{ row[0] }}</th>
+            <td>{{ row[1] }}</td>
+            <td>{{ row[2] }}</td>
+          </tr>
+        }
       </tbody>
     </table>
   </section>
 
   <section class="section-block" aria-labelledby="collaboration-guidelines">
-    <h2 id="collaboration-guidelines">Contribution Guidelines</h2>
+    <h2 id="collaboration-guidelines">{{ vm.page.sections[2].title }}</h2>
     <ol>
-      <li>Submit intent via collaboration intake form detailing scope and data needs.</li>
-      <li>Align on contribution charter specifying deliverables, review cadence, and publication plans.</li>
-      <li>Maintain transparent documentation and adhere to repository governance policies.</li>
+      @for (item of vm.page.sections[2].ordered; track item) {
+        <li>{{ item }}</li>
+      }
     </ol>
   </section>
 
   <section class="section-block" aria-labelledby="collaboration-future">
-    <h2 id="collaboration-future">Future Enhancements</h2>
+    <h2 id="collaboration-future">{{ vm.page.sections[3].title }}</h2>
     <ul>
-      <li>Automated onboarding workflow with contributor agreements and dataset catalog access.</li>
-      <li>Public activity log indexing collaborative submissions and approvals.</li>
-      <li>Integration with ORCID and institutional identity providers for attribution.</li>
+      @for (item of vm.page.sections[3].bullets; track item) {
+        <li>{{ item }}</li>
+      }
     </ul>
   </section>
 </article>

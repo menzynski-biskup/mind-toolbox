@@ -1,18 +1,8 @@
 import { ChangeDetectionStrategy, Component, ElementRef, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-
-type NavLink = {
-  path: string;
-  label: string;
-  future?: boolean;
-};
-
-type NavGroup = {
-  label: string;
-  primary: NavLink;
-  children?: NavLink[];
-};
+import { ContentService } from '../../content/content.service';
+import { NavItem } from '../../content/site-content.model';
 
 @Component({
   selector: 'app-site-layout',
@@ -28,39 +18,9 @@ export class SiteLayoutComponent {
   protected readonly menuOpen = signal(false);
   protected readonly openGroup = signal<number | null>(null);
   private readonly hostRef = inject(ElementRef) as ElementRef<HTMLElement>;
+  private readonly content = inject(ContentService);
 
-  protected readonly navGroups: NavGroup[] = [
-    { label: 'Home', primary: { path: '/', label: 'Home' } },
-    {
-      label: 'Vision & Scope',
-      primary: { path: '/vision', label: 'Vision & Mission' },
-      children: [
-        { path: '/scientific', label: 'Scientific Scope' },
-        { path: '/clinical', label: 'Clinical Scope' },
-      ],
-    },
-    {
-      label: 'Architecture',
-      primary: { path: '/knowledge', label: 'Knowledge Architecture' },
-      children: [
-        { path: '/technology', label: 'Technology Stack' },
-        { path: '/roadmap', label: 'Research Roadmap' },
-      ],
-    },
-    {
-      label: 'Governance',
-      primary: { path: '/ethics', label: 'Ethics & Governance' },
-    },
-    {
-      label: 'Collaboration',
-      primary: { path: '/collaboration', label: 'Collaboration & Open Science' },
-      children: [
-        { path: '/publications', label: 'Publications / Preprints', future: true },
-        { path: '/team', label: 'Team', future: true },
-      ],
-    },
-    { label: 'Contact', primary: { path: '/contact', label: 'Contact' } },
-  ];
+  protected readonly navGroups = this.content.nav();
 
   toggleMenu(): void {
     this.menuOpen.update((state) => !state);
