@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { VisionMissionViewModel } from './vision-mission.viewmodel';
 
 @Component({
   selector: 'app-vision-mission-page',
@@ -7,5 +8,8 @@ import { CommonModule } from '@angular/common';
   templateUrl: './vision-mission.html',
   styleUrl: './vision-mission.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [VisionMissionViewModel],
 })
-export class VisionMissionPageComponent {}
+export class VisionMissionPageComponent {
+  protected readonly vm = inject(VisionMissionViewModel);
+}

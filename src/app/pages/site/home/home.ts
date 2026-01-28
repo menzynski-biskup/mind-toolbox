@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HomeViewModel } from './home.viewmodel';
 
 @Component({
   selector: 'app-home-page',
@@ -7,5 +8,8 @@ import { CommonModule } from '@angular/common';
   templateUrl: './home.html',
   styleUrl: './home.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [HomeViewModel],
 })
-export class HomePageComponent {}
+export class HomePageComponent {
+  protected readonly vm = inject(HomeViewModel);
+}

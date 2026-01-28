@@ -31,10 +31,10 @@
               @if (!group.children || group.children.length === 0) {
                 <a
                   class="nav-link"
-                  [routerLink]="group.primary.path"
+                  [routerLink]="group.path"
                   routerLinkActive="active"
                   #solo="routerLinkActive"
-                  [routerLinkActiveOptions]="{ exact: group.primary.path === '/' }"
+                  [routerLinkActiveOptions]="{ exact: group.path === '/' }"
                   [attr.aria-current]="solo.isActive ? 'page' : null"
                   (click)="closeMenu()"
                 >
@@ -64,14 +64,14 @@
                 >
                   <li class="nav-submenu__item nav-submenu__item--primary">
                     <a
-                      [routerLink]="group.primary.path"
+                      [routerLink]="group.path"
                       routerLinkActive="active"
                       #primaryLink="routerLinkActive"
                       [routerLinkActiveOptions]="{ exact: true }"
                       [attr.aria-current]="primaryLink.isActive ? 'page' : null"
                       (click)="closeMenu()"
                     >
-                      {{ group.primary.label }}
+                      {{ group.label }}
                       <span class="nav-submenu__meta">Overview</span>
                     </a>
                   </li>

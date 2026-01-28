@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { EthicsGovernanceViewModel } from './ethics-governance.viewmodel';
 
 @Component({
   selector: 'app-ethics-governance-page',
@@ -7,5 +8,8 @@ import { CommonModule } from '@angular/common';
   templateUrl: './ethics-governance.html',
   styleUrl: './ethics-governance.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [EthicsGovernanceViewModel],
 })
-export class EthicsGovernancePageComponent {}
+export class EthicsGovernancePageComponent {
+  protected readonly vm = inject(EthicsGovernanceViewModel);
+}

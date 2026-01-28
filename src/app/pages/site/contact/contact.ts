@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ContactViewModel } from './contact.viewmodel';
 
 @Component({
   selector: 'app-contact-page',
@@ -7,5 +8,8 @@ import { CommonModule } from '@angular/common';
   templateUrl: './contact.html',
   styleUrl: './contact.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ContactViewModel],
 })
-export class ContactPageComponent {}
+export class ContactPageComponent {
+  protected readonly vm = inject(ContactViewModel);
+}

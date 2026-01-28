@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ClinicalScopeViewModel } from './clinical-scope.viewmodel';
 
 @Component({
   selector: 'app-clinical-scope-page',
@@ -7,5 +8,8 @@ import { CommonModule } from '@angular/common';
   templateUrl: './clinical-scope.html',
   styleUrl: './clinical-scope.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ClinicalScopeViewModel],
 })
-export class ClinicalScopePageComponent {}
+export class ClinicalScopePageComponent {
+  protected readonly vm = inject(ClinicalScopeViewModel);
+}
