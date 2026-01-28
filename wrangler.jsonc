@@ -1,3 +1,17 @@
-name = "mindtoolbox"
-pages_build_output_dir = "dist/mind-frontend/browser"
-compatibility_date = "2025-12-03"
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+
+  // Name of your Worker (must be unique in your account)
+  "name": "mind-frontend",
+
+  // Pick today's date (or keep it current when you update runtime behavior)
+  "compatibility_date": "2026-01-28",
+
+  // Serve your Angular build output as static assets
+  "assets": {
+    "directory": "./dist/mind-frontend",
+
+    // SPA routing: if /some/route isn't a real file, serve /index.html
+    "not_found_handling": "single-page-application"
+  }
+}
