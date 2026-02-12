@@ -10,8 +10,8 @@ import { signJWT, verifyJWT } from '../utils/jwt';
 import { setCookie, clearCookie, getCookie } from '../utils/cookies';
 import { checkRateLimit, createRateLimitResponse } from '../utils/rate-limit';
 
-const AUTH_COOKIE_NAME = 'auth_token';
-const COOKIE_MAX_AGE = 24 * 60 * 60; // 24 hours in seconds
+const AUTH_COOKIE_NAME = 'mind_session';
+const COOKIE_MAX_AGE = 7 * 24 * 60 * 60; // 7 days in seconds
 
 /**
  * Convert User to SafeUser (remove sensitive fields)
@@ -24,6 +24,13 @@ function toSafeUser(user: User): SafeUser {
     role: user.role,
     created_at: user.created_at
   };
+}
+
+/**
+ * Generate a UUID v4
+ */
+function generateUUID(): string {
+  return crypto.randomUUID();
 }
 
 /**
@@ -99,10 +106,14 @@ export async function handleRegister(request: Request, env: Env): Promise<Respon
     // Hash password
     const passwordHash = await hashPassword(password);
 
+    // Generate UUID for new user
+    const userId = generateUUID();
+    const createdAt = new Date().toISOString();
+
     // Insert user
     const result = await env.DB.prepare(
-      'INSERT INTO users (email, password_hash, full_name, role, created_at) VALUES (?, ?, ?, ?, datetime("now"))'
-    ).bind(email, passwordHash, fullName, role).run();
+      'INSERT INTO users (id, email, password_hash, full_name, role, created_at) VALUES (?, ?, ?, ?, ?, ?)'
+    ).bind(userId, email, passwordHash, fullName, role, createdAt).run();
 
     if (!result.success) {
       return new Response(
@@ -113,8 +124,8 @@ export async function handleRegister(request: Request, env: Env): Promise<Respon
 
     // Get the newly created user
     const newUser = await env.DB.prepare(
-      'SELECT * FROM users WHERE email = ?'
-    ).bind(email).first() as User | null;
+      'SELECT * FROM users WHERE id = ?'
+    ).bind(userId).first() as User | null;
 
     if (!newUser) {
       return new Response(
@@ -123,9 +134,9 @@ export async function handleRegister(request: Request, env: Env): Promise<Respon
       );
     }
 
-    // Create JWT
+    // Create JWT with sub, email, and role
     const token = await signJWT(
-      { userId: newUser.id, role: newUser.role },
+      { sub: newUser.id, email: newUser.email, role: newUser.role },
       env.JWT_SECRET
     );
 
@@ -140,7 +151,7 @@ export async function handleRegister(request: Request, env: Env): Promise<Respon
     return new Response(
       JSON.stringify({ user: toSafeUser(newUser) }),
       {
-        status: 201,
+        status: 200,
         headers: {
           'Content-Type': 'application/json',
           'Set-Cookie': cookie
@@ -209,9 +220,9 @@ export async function handleLogin(request: Request, env: Env): Promise<Response>
       );
     }
 
-    // Create JWT
+    // Create JWT with sub, email, and role
     const token = await signJWT(
-      { userId: user.id, role: user.role },
+      { sub: user.id, email: user.email, role: user.role },
       env.JWT_SECRET
     );
 
@@ -250,7 +261,7 @@ export async function handleLogout(_request: Request, _env: Env): Promise<Respon
   const cookie = clearCookie(AUTH_COOKIE_NAME);
 
   return new Response(
-    JSON.stringify({ message: 'Logged out successfully' }),
+    JSON.stringify({ ok: true }),
     {
       status: 200,
       headers: {
@@ -291,12 +302,20 @@ export async function handleMe(request: Request, env: Env): Promise<Response> {
     // Get user from database
     const user = await env.DB.prepare(
       'SELECT * FROM users WHERE id = ?'
-    ).bind(payload.userId).first() as User | null;
+    ).bind(payload.sub).first() as User | null;
 
     if (!user) {
+      // Clear cookie if user not found
+      const cookie = clearCookie(AUTH_COOKIE_NAME);
       return new Response(
         JSON.stringify({ error: 'User not found' }),
-        { status: 401, headers: { 'Content-Type': 'application/json' } }
+        { 
+          status: 401, 
+          headers: { 
+            'Content-Type': 'application/json',
+            'Set-Cookie': cookie
+          } 
+        }
       );
     }
 
