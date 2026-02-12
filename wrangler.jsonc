@@ -7,7 +7,35 @@
   // Pick today's date (or keep it current when you update runtime behavior)
   "compatibility_date": "2026-01-28",
 
+  // Worker entry point
+  "main": "./worker/src/index.ts",
+
+  // D1 Database binding
+  // IMPORTANT: Uncomment this section AFTER creating your D1 database:
+  //   1. Run: npx wrangler d1 create mindtoolbox-db
+  //   2. Copy the database_id from the output
+  //   3. Replace YOUR_DATABASE_ID_HERE with the actual ID
+  //   4. Uncomment the lines below
+  //   5. Run migration: npx wrangler d1 execute mindtoolbox-db --remote --file=./worker/migrations/0001_create_users_table.sql
+  // "d1_databases": [
+  //   {
+  //     "binding": "DB",
+  //     "database_name": "mindtoolbox-db",
+  //     "database_id": "YOUR_DATABASE_ID_HERE"
+  //   }
+  // ],
+
+  // Environment variables
+  // IMPORTANT: Set JWT_SECRET as a secret in production using:
+  //   echo "your-secret-key" | npx wrangler secret put JWT_SECRET
+  // For local development only, you can use vars, but never commit real secrets
+  // "vars": {
+  //   "JWT_SECRET": "local-dev-secret-only"
+  // },
+
   // Serve your Angular build output as static assets
+  // Note: Comment out or remove the assets section when testing the worker without building Angular
+  // Uncomment after running: npm run build
   "assets": {
     "directory": "./dist/mind-frontend/browser",
 

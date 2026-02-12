@@ -37,8 +37,10 @@
     "@angular/build": "^21.0.0",
     "@angular/cli": "^21.0.4",
     "@angular/compiler-cli": "^21.1.1",
+    "@cloudflare/workers-types": "^4.20260212.0",
     "jsdom": "^27.1.0",
     "typescript": "~5.9.2",
-    "vitest": "^4.0.8"
+    "vitest": "^4.0.8",
+    "wrangler": "^4.64.0"
   }
 }
