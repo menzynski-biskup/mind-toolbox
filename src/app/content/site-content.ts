@@ -145,7 +145,7 @@ export const SITE_CONTENT: SiteContent = {
           bullets: [
             'Research investigating limitations of current tools and potential enhancements',
             'Development of mechanism-informed assessment frameworks',
-            'Researcher mode: tools for creating research studies, managing intake forms, adding tests for participants, and organizing research pipelines',
+            'Researcher Mode: tools for creating research studies, managing intake forms, adding tests for participants, and organizing research pipelines',
             'Conceptual design of the Dementia AI Assistant',
             'Ethics and safety considerations embedded from the design phase',
             'Future clinical pilot collaborations (conditional on ethics approval and funding)',
