@@ -7,6 +7,23 @@
   // Pick today's date (or keep it current when you update runtime behavior)
   "compatibility_date": "2026-01-28",
 
+  // Worker entry point
+  "main": "./worker/src/index.ts",
+
+  // D1 Database binding
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "mindtoolbox-db",
+      "database_id": "YOUR_DATABASE_ID_HERE"
+    }
+  ],
+
+  // Environment variables
+  "vars": {
+    "JWT_SECRET": "CHANGE_THIS_IN_PRODUCTION"
+  },
+
   // Serve your Angular build output as static assets
   "assets": {
     "directory": "./dist/mind-frontend/browser",
