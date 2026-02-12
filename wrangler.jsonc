@@ -25,6 +25,8 @@
   },
 
   // Serve your Angular build output as static assets
+  // Note: Comment out or remove the assets section when testing the worker without building Angular
+  // Uncomment after running: npm run build
   "assets": {
     "directory": "./dist/mind-frontend/browser",
 
