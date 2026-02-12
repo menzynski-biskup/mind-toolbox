@@ -5,7 +5,7 @@
 import { JWTPayload } from '../types/user';
 
 const JWT_ALGORITHM = 'HS256';
-const JWT_EXPIRY_HOURS = 24; // 24 hours
+const JWT_EXPIRY_DAYS = 7; // 7 days
 
 /**
  * Base64URL encode
@@ -58,7 +58,7 @@ export async function signJWT(payload: Omit<JWTPayload, 'iat' | 'exp'>, secret: 
   const fullPayload: JWTPayload = {
     ...payload,
     iat: now,
-    exp: now + (JWT_EXPIRY_HOURS * 60 * 60)
+    exp: now + (JWT_EXPIRY_DAYS * 24 * 60 * 60)
   };
   
   const header = {
