@@ -14,14 +14,14 @@ export const SITE_CONTENT: SiteContent = {
   footer: {
     projectName: 'MIND',
     mission:
-      'A proposed research initiative exploring mechanism-informed, technology-enabled decision support for mental health and neurocognitive disorders, including research pipeline tools for building and managing studies.',
+      'A proposed research initiative exploring mechanism-informed, technology-enabled decision support for mental health and neurocognitive disorders.',
   },
   pages: {
     home: {
       hero: {
         title: 'A Concept for Modern Integrated Neurocognitive Diagnostics',
         description:
-          'MIND is a proposed research and development initiative exploring mechanism-informed, technology-enabled decision support for mental health and neurocognitive disorders, including research pipeline tools for researchers.',
+          'MIND is a proposed research and development initiative exploring mechanism-informed, technology-enabled decision support for mental health and neurocognitive disorders, including research pipeline tools.',
         actions: [
           {
             label: 'Learn about the concept',
