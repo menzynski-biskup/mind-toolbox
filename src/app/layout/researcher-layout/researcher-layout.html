@@ -1,0 +1,72 @@
+<div class="researcher-layout">
+  <a class="skip-link" href="#researcher-main">Skip to main content</a>
+
+  <aside class="researcher-sidebar" aria-label="Researcher navigation">
+    <div class="researcher-sidebar__brand">
+      <span class="researcher-sidebar__logo" aria-hidden="true">M</span>
+      <div>
+        <p class="researcher-sidebar__name">Mind Toolbox</p>
+        <p class="researcher-sidebar__program">{{ workspace.program }}</p>
+      </div>
+    </div>
+
+    <div class="researcher-sidebar__workspace">
+      <p class="meta-text">Workspace</p>
+      <p class="researcher-sidebar__workspace-name">{{ workspace.name }}</p>
+      <div class="researcher-sidebar__workspace-meta">
+        <span>{{ workspace.activeProjects }} projects</span>
+        <span>{{ workspace.activeStudies }} studies</span>
+      </div>
+    </div>
+
+    <nav>
+      <ul class="researcher-sidebar__nav">
+        @for (item of navItems; track item.label) {
+          <li>
+            <a
+              [routerLink]="item.path"
+              routerLinkActive="is-active"
+              #navLink="routerLinkActive"
+              [attr.aria-current]="navLink.isActive ? 'page' : null"
+            >
+              {{ item.label }}
+            </a>
+          </li>
+        }
+      </ul>
+    </nav>
+
+    <div class="researcher-sidebar__footer">
+      <div>
+        <p class="meta-text">Signed in</p>
+        <p class="researcher-sidebar__user">{{ user.name }}</p>
+        <p class="researcher-sidebar__role">{{ user.role }}</p>
+      </div>
+      <a class="researcher-sidebar__support" routerLink="/contact">Support hub</a>
+    </div>
+  </aside>
+
+  <div class="researcher-main">
+    <header class="researcher-main__header">
+      <div>
+        <p class="meta-text">Research workspace</p>
+        <h1>{{ workspace.name }}</h1>
+        <p class="researcher-main__subtitle">
+          Coordinate projects, studies, and participant visits with structured protocols and reusable scripts.
+        </p>
+      </div>
+      <div class="researcher-main__actions" aria-label="Quick actions">
+        @for (action of quickActions; track action.label) {
+          <button type="button" class="researcher-main__action">
+            <span>{{ action.label }}</span>
+            <span class="researcher-main__action-detail">{{ action.detail }}</span>
+          </button>
+        }
+      </div>
+    </header>
+
+    <main id="researcher-main" tabindex="-1">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

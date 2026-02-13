@@ -1,12 +1,221 @@
-<div class="page">
-  <h2>Researcher Dashboard</h2>
-  <p>Here you’ll manage studies, participants, and datasets.</p>
+<article class="page-content researcher-dashboard" aria-labelledby="researcher-dashboard-title">
+  <header>
+    <span class="tag">Researcher workspace</span>
+    <h2 id="researcher-dashboard-title" class="page-heading">Researcher dashboard</h2>
+    <p>
+      Design and coordinate studies from protocol definition through visit execution, participant eligibility, and
+      data export readiness.
+    </p>
+    <div class="page-meta">
+      <span class="meta-chip">Workspace: {{ workspaceProgram }}</span>
+      <span class="meta-chip meta-chip--muted">Scaffolded experience</span>
+    </div>
+  </header>
 
-  <ul>
-    <li>New study</li>
-    <li>Current studies</li>
-    <li>Recent exports</li>
-  </ul>
+  <section class="summary-grid" aria-label="Workspace summary">
+    @for (card of summaryCards; track card.title) {
+      <article class="summary-card">
+        <h3>{{ card.title }}</h3>
+        <p>{{ card.description }}</p>
+        <p class="meta-text">{{ card.meta }}</p>
+      </article>
+    }
+  </section>
 
-  <button routerLink="/login">Back to login</button>
-</div>
+  <section class="section-block" aria-labelledby="info-architecture">
+    <h2 id="info-architecture">Information architecture</h2>
+    <p>The researcher workspace aligns every study to a clear hierarchy of operational artifacts.</p>
+    <ol class="researcher-dashboard__hierarchy">
+      <li>
+        Workspace
+        <ul>
+          <li>
+            Projects
+            <ul>
+              <li>
+                Studies
+                <ul>
+                  <li>Visit templates (Intake, Session 1, Session 2)</li>
+                  <li>Script steps (instruction, consent, questionnaire, task, completion)</li>
+                  <li>Participants</li>
+                  <li>Scheduled visits</li>
+                  <li>Results &amp; exports</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ol>
+  </section>
+
+  <section class="section-block" aria-labelledby="study-protocol">
+    <h2 id="study-protocol">Study protocol &amp; visit templates</h2>
+    <p>
+      Each study captures a structured proposal/protocol that feeds directly into reusable visit templates and script
+      steps.
+    </p>
+    <div class="summary-grid">
+      <article class="summary-card">
+        <h3>Protocol structure</h3>
+        <ul>
+          <li>Research question, hypotheses, and outcomes.</li>
+          <li>Inclusion/exclusion criteria and safety monitoring.</li>
+          <li>Data capture plan and compliance checkpoints.</li>
+        </ul>
+      </article>
+      <article class="summary-card">
+        <h3>Visit templates</h3>
+        <ul>
+          <li>Intake template for baseline demographics.</li>
+          <li>Session 1 &amp; Session 2 templates for longitudinal visits.</li>
+          <li>Template-level scheduling rules.</li>
+        </ul>
+      </article>
+      <article class="summary-card">
+        <h3>Script steps</h3>
+        <ul>
+          <li>Instruction step to orient participants.</li>
+          <li>Consent step with attestation or signature placeholder.</li>
+          <li>Questionnaire + task steps, ending with completion.</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="section-block" aria-labelledby="participant-workflow">
+    <h2 id="participant-workflow">Participant workflow</h2>
+    <ol>
+      <li>Add participant and capture demographic baseline.</li>
+      <li>Schedule intake visit from the intake template.</li>
+      <li>Complete intake in the visit runner with scripted steps.</li>
+      <li>Auto-check eligibility using intake answers and questionnaire scores.</li>
+      <li>If eligible, schedule Session 1 and Session 2 visits.</li>
+    </ol>
+  </section>
+
+  <section class="section-block" aria-labelledby="route-map">
+    <h2 id="route-map">Route map</h2>
+    <p class="meta-text">Routes marked “Planned” represent future navigation that will be implemented post-MVP.</p>
+    <table>
+      <caption>Researcher app routing</caption>
+      <thead>
+        <tr>
+          <th>Route</th>
+          <th>Purpose</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (route of routeMap; track route.path) {
+          <tr>
+            <td><code>{{ route.path }}</code></td>
+            <td>{{ route.purpose }}</td>
+            <td>{{ route.status }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section-block" aria-labelledby="component-tree">
+    <h2 id="component-tree">Page / component tree</h2>
+    <pre><code>ResearcherLayoutComponent
+├─ SidebarNavigation
+├─ WorkspaceHeader
+└─ RouterOutlet
+   ├─ ResearcherDashboardComponent
+   ├─ ResearcherSectionComponent (Projects, Studies, Participants, Visits, Toolbox, Teams, Documents, Exports, Help)
+   └─ VisitRunnerComponent</code></pre>
+  </section>
+
+  <section class="section-block" aria-labelledby="state-model">
+    <h2 id="state-model">State model</h2>
+    <dl class="researcher-dashboard__state">
+      @for (state of stateModel; track state.name) {
+        <dt>{{ state.name }}</dt>
+        <dd>{{ state.detail }}</dd>
+      }
+    </dl>
+  </section>
+
+  <section class="section-block" aria-labelledby="api-plan">
+    <h2 id="api-plan">API endpoint plan</h2>
+    <table>
+      <caption>Planned API surface</caption>
+      <thead>
+        <tr>
+          <th>Method</th>
+          <th>Endpoint</th>
+          <th>Purpose</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (endpoint of apiPlan; track endpoint.path) {
+          <tr>
+            <td>{{ endpoint.method }}</td>
+            <td><code>{{ endpoint.path }}</code></td>
+            <td>{{ endpoint.purpose }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section-block" aria-labelledby="d1-plan">
+    <h2 id="d1-plan">D1 table plan</h2>
+    <table>
+      <caption>D1 schema overview</caption>
+      <thead>
+        <tr>
+          <th>Table</th>
+          <th>Key fields</th>
+          <th>Relations</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (table of d1Tables; track table.table) {
+          <tr>
+            <td>{{ table.table }}</td>
+            <td>{{ table.fields }}</td>
+            <td>{{ table.relation }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section-block" aria-labelledby="phased-plan">
+    <h2 id="phased-plan">Phased implementation plan</h2>
+    <div class="summary-grid">
+      @for (phase of phases; track phase.phase) {
+        <article class="summary-card">
+          <h3>{{ phase.phase }}</h3>
+          <p class="meta-text">{{ phase.focus }}</p>
+          <ul>
+            @for (item of phase.items; track item) {
+              <li>{{ item }}</li>
+            }
+          </ul>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="section-block" aria-labelledby="wireframes">
+    <h2 id="wireframes">Starter wireframe descriptions per page</h2>
+    <div class="summary-grid">
+      @for (wireframe of wireframes; track wireframe.page) {
+        <article class="summary-card">
+          <h3>{{ wireframe.page }}</h3>
+          <p>{{ wireframe.detail }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <div class="researcher-dashboard__footer-actions">
+    <a routerLink="/app/visits/runner" class="researcher-dashboard__cta">Launch visit runner demo</a>
+    <a routerLink="/login" class="researcher-dashboard__cta researcher-dashboard__cta--ghost">Back to login</a>
+  </div>
+</article>

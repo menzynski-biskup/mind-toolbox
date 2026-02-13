@@ -12,14 +12,98 @@ export const routes: Routes = [
   },
   {
     path: 'app',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./layout/researcher-layout/researcher-layout').then((m) => m.ResearcherLayoutComponent),
     children: [
       {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full',
+      },
+      {
         path: 'dashboard',
-        canActivate: [authGuard],
         loadComponent: () =>
           import('./pages/researcher-dashboard/researcher-dashboard').then(
             (m) => m.ResearcherDashboardComponent
           ),
+      },
+      {
+        path: 'projects',
+        loadComponent: () =>
+          import('./pages/researcher-section/researcher-section').then(
+            (m) => m.ResearcherSectionComponent
+          ),
+        data: { sectionId: 'projects' },
+      },
+      {
+        path: 'studies',
+        loadComponent: () =>
+          import('./pages/researcher-section/researcher-section').then(
+            (m) => m.ResearcherSectionComponent
+          ),
+        data: { sectionId: 'studies' },
+      },
+      {
+        path: 'participants',
+        loadComponent: () =>
+          import('./pages/researcher-section/researcher-section').then(
+            (m) => m.ResearcherSectionComponent
+          ),
+        data: { sectionId: 'participants' },
+      },
+      {
+        path: 'visits/runner',
+        loadComponent: () =>
+          import('./pages/visit-runner/visit-runner').then((m) => m.VisitRunnerComponent),
+      },
+      {
+        path: 'visits',
+        loadComponent: () =>
+          import('./pages/researcher-section/researcher-section').then(
+            (m) => m.ResearcherSectionComponent
+          ),
+        data: { sectionId: 'visits' },
+      },
+      {
+        path: 'toolbox',
+        loadComponent: () =>
+          import('./pages/researcher-section/researcher-section').then(
+            (m) => m.ResearcherSectionComponent
+          ),
+        data: { sectionId: 'toolbox' },
+      },
+      {
+        path: 'teams',
+        loadComponent: () =>
+          import('./pages/researcher-section/researcher-section').then(
+            (m) => m.ResearcherSectionComponent
+          ),
+        data: { sectionId: 'teams' },
+      },
+      {
+        path: 'documents',
+        loadComponent: () =>
+          import('./pages/researcher-section/researcher-section').then(
+            (m) => m.ResearcherSectionComponent
+          ),
+        data: { sectionId: 'documents' },
+      },
+      {
+        path: 'exports',
+        loadComponent: () =>
+          import('./pages/researcher-section/researcher-section').then(
+            (m) => m.ResearcherSectionComponent
+          ),
+        data: { sectionId: 'exports' },
+      },
+      {
+        path: 'help',
+        loadComponent: () =>
+          import('./pages/researcher-section/researcher-section').then(
+            (m) => m.ResearcherSectionComponent
+          ),
+        data: { sectionId: 'help' },
       },
     ],
   },

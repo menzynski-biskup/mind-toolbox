@@ -1,0 +1,154 @@
+<article class="page-content visit-runner" aria-labelledby="visit-runner-title">
+  <header>
+    <span class="tag">Visit Runner</span>
+    <h2 id="visit-runner-title" class="page-heading">Intake visit runner</h2>
+    <p>
+      Execute each visit step in sequence, validate required inputs, and log completion milestones for audit
+      readiness.
+    </p>
+    <div class="page-meta">
+      <span class="meta-chip">Template: Intake</span>
+      <span class="meta-chip meta-chip--muted">Participant: P-1042</span>
+    </div>
+  </header>
+
+  <section class="visit-runner__grid">
+    <div class="visit-runner__rail">
+      <div class="visit-runner__progress" role="progressbar" [attr.aria-valuenow]="progressPercent()" aria-valuemin="0" aria-valuemax="100">
+        <div class="visit-runner__progress-bar" [style.width.%]="progressPercent()"></div>
+      </div>
+      <p class="meta-text">{{ progressPercent() }}% complete</p>
+
+      <ol class="visit-runner__steps">
+        @for (step of steps; track step.id; let i = $index) {
+          <li
+            class="visit-runner__step"
+            [class.visit-runner__step--active]="i === currentIndex()"
+            [class.visit-runner__step--complete]="isStepComplete(step.id)"
+          >
+            <div>
+              <h3>{{ step.title }}</h3>
+              <p>{{ step.description }}</p>
+            </div>
+            @if (step.required) {
+              <span class="tag">Required</span>
+            }
+          </li>
+        }
+      </ol>
+    </div>
+
+    <div class="visit-runner__panel">
+      <div class="visit-runner__panel-header">
+        <p class="meta-text">Current step</p>
+        <h3>{{ currentStep().title }}</h3>
+        <p>{{ currentStep().description }}</p>
+      </div>
+
+      <div class="visit-runner__panel-body">
+        @switch (currentStep().type) {
+          @case ('instruction') {
+            <div>
+              <p>Confirm room setup, available materials, and participant comfort before continuing.</p>
+              <ul>
+                <li>Review visit objectives and estimated duration.</li>
+                <li>Ensure consent paperwork is ready.</li>
+                <li>Prepare questionnaire devices and task materials.</li>
+              </ul>
+            </div>
+          }
+          @case ('consent') {
+            <div class="visit-runner__field">
+              <label>
+                <input type="checkbox" [checked]="consentAttested()" (change)="updateConsent($event)" />
+                Participant attests to informed consent (digital signature placeholder).
+              </label>
+            </div>
+          }
+          @case ('questionnaire') {
+            <div class="visit-runner__form">
+              <div class="visit-runner__field">
+                <label for="intake-age">Participant age</label>
+                <input
+                  id="intake-age"
+                  type="number"
+                  [min]="MIN_AGE"
+                  [max]="MAX_AGE_BOUNDARY"
+                  [value]="intakeAge() ?? ''"
+                  (input)="updateIntakeAge($event)"
+                />
+              </div>
+              <div class="visit-runner__field">
+                <label for="phq9-score">PHQ-9 score</label>
+                <input
+                  id="phq9-score"
+                  type="number"
+                  [min]="MIN_PHQ9_SCORE"
+                  [max]="MAX_PHQ9_SCORE"
+                  [value]="phq9Score() ?? ''"
+                  (input)="updatePhq9Score($event)"
+                />
+              </div>
+              <div class="visit-runner__eligibility">
+                <p class="visit-runner__eligibility-status">
+                  Eligibility: <strong>{{ eligibility().status }}</strong>
+                </p>
+                <p class="meta-text">{{ eligibility().detail }}</p>
+              </div>
+            </div>
+          }
+          @case ('task') {
+            <div>
+              <p>AVLT task placeholder. Use this step to launch the cognitive task and capture completion.</p>
+              <button type="button" class="visit-runner__task-btn" (click)="toggleTaskCompletion()">
+                {{ taskCompleted() ? 'Task marked complete' : 'Mark task complete' }}
+              </button>
+              <p class="meta-text">
+                {{ taskCompleted() ? 'Task completion logged for scoring.' : 'Task must be completed to continue.' }}
+              </p>
+            </div>
+          }
+          @case ('completion') {
+            <div>
+              <p>Review visit completion, document deviations, and schedule follow-up sessions.</p>
+              <ul>
+                <li>Confirm all required steps have been logged.</li>
+                <li>Capture final notes and next-visit recommendations.</li>
+                <li>Share completion summary with the coordinator.</li>
+              </ul>
+            </div>
+          }
+        }
+      </div>
+
+      <div class="visit-runner__actions">
+        <button type="button" class="visit-runner__btn visit-runner__btn--ghost" (click)="goPrevious()" [disabled]="!canGoBack()">
+          Back
+        </button>
+        <button type="button" class="visit-runner__btn" (click)="completeCurrentStep()" [disabled]="!canCompleteStep()">
+          Complete step
+        </button>
+        <button type="button" class="visit-runner__btn visit-runner__btn--primary" (click)="goNext()" [disabled]="!canAdvance()">
+          Next step
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-block" aria-labelledby="visit-runner-log">
+    <h2 id="visit-runner-log">Completion log</h2>
+    @if (completionLog().length === 0) {
+      <p class="meta-text">Complete each step to build the visit log.</p>
+    } @else {
+      <ul class="visit-runner__log">
+        @for (entry of completionLog(); track entry.id) {
+          <li>
+            <strong>{{ entry.title }}</strong>
+            <span class="meta-text">{{ entry.timestamp }}</span>
+            <p class="meta-text">{{ entry.note }}</p>
+          </li>
+        }
+      </ul>
+    }
+  </section>
+</article>

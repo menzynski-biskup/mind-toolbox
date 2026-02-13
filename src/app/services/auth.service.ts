@@ -180,4 +180,14 @@ export class AuthService {
   getCurrentUser(): User | null {
     return this.currentUserSignal();
   }
+
+  seedDemoUser(role: 'clinician' | 'researcher'): void {
+    this.currentUserSignal.set({
+      id: role === 'clinician' ? 2 : 1,
+      email: role === 'clinician' ? 'demo.clinician@mind.local' : 'demo.researcher@mind.local',
+      full_name: role === 'clinician' ? 'Demo Clinician' : 'Demo Researcher',
+      role,
+      created_at: new Date().toISOString(),
+    });
+  }
 }
