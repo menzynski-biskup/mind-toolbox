@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
   selector: 'app-register',
   imports: [CommonModule],
   templateUrl: './register.html',
-  styleUrl: '../login/login.scss',
+  styleUrl: './register.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterComponent {

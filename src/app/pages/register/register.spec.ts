@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { RegisterComponent } from './register';
 
-describe('Register', () => {
+describe('RegisterComponent', () => {
   let component: RegisterComponent;
   let fixture: ComponentFixture<RegisterComponent>;
   let navigatedTo: unknown;
