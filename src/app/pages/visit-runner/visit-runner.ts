@@ -18,6 +18,12 @@ interface CompletionLogEntry {
   note: string;
 }
 
+const MIN_AGE = 18;
+const MAX_AGE_BOUNDARY = 120;
+const MIN_PHQ9_SCORE = 0;
+const MAX_PHQ9_SCORE = 27;
+const ELIGIBLE_MAX_PHQ9_SCORE = 10;
+
 @Component({
   selector: 'app-visit-runner',
   imports: [CommonModule],
@@ -26,6 +32,11 @@ interface CompletionLogEntry {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VisitRunnerComponent {
+  protected readonly MIN_AGE = MIN_AGE;
+  protected readonly MAX_AGE_BOUNDARY = MAX_AGE_BOUNDARY;
+  protected readonly MIN_PHQ9_SCORE = MIN_PHQ9_SCORE;
+  protected readonly MAX_PHQ9_SCORE = MAX_PHQ9_SCORE;
+
   protected readonly steps: VisitStep[] = [
     {
       id: 'instruction',
@@ -84,7 +95,7 @@ export class VisitRunnerComponent {
     if (age === null || score === null) {
       return { status: 'Pending', detail: 'Enter age and PHQ-9 score to auto-check eligibility.' };
     }
-    const eligible = age >= 18 && score <= 10;
+    const eligible = age >= MIN_AGE && score <= ELIGIBLE_MAX_PHQ9_SCORE;
     return {
       status: eligible ? 'Eligible' : 'Review required',
       detail: eligible
@@ -142,7 +153,9 @@ export class VisitRunnerComponent {
       {
         id: step.id,
         title: step.title,
-        timestamp: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
+        timestamp: new Intl.DateTimeFormat(undefined, { hour: '2-digit', minute: '2-digit' }).format(
+          new Date()
+        ),
         note: step.required ? 'Required step completed.' : 'Optional step completed.',
       },
     ]);
@@ -185,7 +198,12 @@ export class VisitRunnerComponent {
     if (age === null || score === null) {
       return false;
     }
-    return age >= 18 && age <= 120 && score >= 0 && score <= 27;
+    return (
+      age >= MIN_AGE &&
+      age <= MAX_AGE_BOUNDARY &&
+      score >= MIN_PHQ9_SCORE &&
+      score <= MAX_PHQ9_SCORE
+    );
   }
 
   private parseNumber(event: Event): number | null {

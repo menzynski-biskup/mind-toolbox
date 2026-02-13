@@ -15,6 +15,7 @@ describe('VisitRunner', () => {
     fixture = TestBed.createComponent(VisitRunnerComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
+    fixture.detectChanges();
   });
 
   it('should create', () => {
@@ -22,16 +23,43 @@ describe('VisitRunner', () => {
   });
 
   it('requires consent attestation before completing consent step', () => {
-    const state = component as unknown as {
-      currentIndex: { set: (value: number) => void };
-      consentAttested: { set: (value: boolean) => void };
-      canCompleteStep: () => boolean;
+    const getButton = (label: string): HTMLButtonElement => {
+      const buttons = Array.from(
+        fixture.nativeElement.querySelectorAll('button')
+      ) as HTMLButtonElement[];
+      return buttons.find((button) => button.textContent?.includes(label)) as HTMLButtonElement;
     };
 
-    state.currentIndex.set(1);
-    expect(state.canCompleteStep()).toBeFalsy();
+    const completeButton = getButton('Complete step');
+    const nextButton = getButton('Next step');
 
-    state.consentAttested.set(true);
-    expect(state.canCompleteStep()).toBeTruthy();
+    completeButton.click();
+    fixture.detectChanges();
+    nextButton.click();
+    fixture.detectChanges();
+
+    const consentCompleteButton = getButton('Complete step');
+    expect(consentCompleteButton.disabled).toBeTruthy();
+
+    const checkbox = fixture.nativeElement.querySelector('input[type="checkbox"]') as HTMLInputElement;
+    checkbox.click();
+    fixture.detectChanges();
+
+    expect(consentCompleteButton.disabled).toBeFalsy();
+  });
+
+  it('logs completion when a step is completed', () => {
+    const completeButton = (
+      Array.from(fixture.nativeElement.querySelectorAll('button')) as HTMLButtonElement[]
+    ).find((button) => button.textContent?.includes('Complete step')) as HTMLButtonElement;
+
+    completeButton.click();
+    fixture.detectChanges();
+
+    const logEntries = fixture.nativeElement.querySelectorAll('.visit-runner__log li');
+    const progressText = fixture.nativeElement.querySelector('.visit-runner__rail .meta-text')?.textContent;
+
+    expect(logEntries.length).toBe(1);
+    expect(progressText).toContain('20');
   });
 });

@@ -10,6 +10,7 @@ import { RouterLink } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ResearcherDashboardComponent {
+  protected readonly workspaceProgram = 'Memory & Aging Initiative';
   protected readonly summaryCards = [
     {
       title: 'Workspace overview',

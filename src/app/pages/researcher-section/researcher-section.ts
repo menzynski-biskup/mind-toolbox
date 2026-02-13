@@ -334,6 +334,18 @@ const SECTION_CONTENT: Record<SectionId, SectionContent> = {
 })
 export class ResearcherSectionComponent {
   private readonly route = inject(ActivatedRoute);
-  protected readonly content =
-    SECTION_CONTENT[this.route.snapshot.data['sectionId'] as SectionId] ?? SECTION_CONTENT.projects;
+  protected readonly sectionId = this.route.snapshot.data['sectionId'] as SectionId | undefined;
+  protected readonly content = this.resolveContent(this.sectionId);
+
+  private resolveContent(sectionId: SectionId | undefined): SectionContent {
+    if (!sectionId || !SECTION_CONTENT[sectionId]) {
+      const validSections = Object.keys(SECTION_CONTENT).join(', ');
+      console.error(
+        `Unknown sectionId parameter "${sectionId ?? 'undefined'}". Expected one of: ${validSections}. ` +
+          'Defaulting to projects.'
+      );
+      return SECTION_CONTENT.projects;
+    }
+    return SECTION_CONTENT[sectionId];
+  }
 }

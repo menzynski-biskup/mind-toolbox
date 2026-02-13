@@ -181,7 +181,7 @@ export class AuthService {
     return this.currentUserSignal();
   }
 
-  seedDemoUser(role: string): void {
+  seedDemoUser(role: 'clinician' | 'researcher'): void {
     this.currentUserSignal.set({
       id: role === 'clinician' ? 2 : 1,
       email: role === 'clinician' ? 'demo.clinician@mind.local' : 'demo.researcher@mind.local',

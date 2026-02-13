@@ -72,8 +72,8 @@
                 <input
                   id="intake-age"
                   type="number"
-                  min="18"
-                  max="120"
+                  [min]="MIN_AGE"
+                  [max]="MAX_AGE_BOUNDARY"
                   [value]="intakeAge() ?? ''"
                   (input)="updateIntakeAge($event)"
                 />
@@ -83,8 +83,8 @@
                 <input
                   id="phq9-score"
                   type="number"
-                  min="0"
-                  max="27"
+                  [min]="MIN_PHQ9_SCORE"
+                  [max]="MAX_PHQ9_SCORE"
                   [value]="phq9Score() ?? ''"
                   (input)="updatePhq9Score($event)"
                 />
