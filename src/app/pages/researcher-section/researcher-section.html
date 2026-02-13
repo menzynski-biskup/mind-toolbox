@@ -1,0 +1,53 @@
+<article class="page-content researcher-section" aria-labelledby="section-title">
+  <header>
+    <span class="tag">Research workspace</span>
+    <h2 id="section-title" class="page-heading">{{ content.title }}</h2>
+    <p>{{ content.description }}</p>
+    <div class="page-meta">
+      @for (tag of content.tags; track tag) {
+        <span class="meta-chip">{{ tag }}</span>
+      }
+    </div>
+  </header>
+
+  <section class="section-block" aria-labelledby="section-focus">
+    <h2 id="section-focus">Focus areas</h2>
+    <div class="summary-grid">
+      @for (card of content.cards; track card.title) {
+        <article class="summary-card">
+          <h3>{{ card.title }}</h3>
+          <p>{{ card.description }}</p>
+          <p class="meta-text">{{ card.meta }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="section-block" aria-labelledby="section-actions">
+    <h2 id="section-actions">Primary actions</h2>
+    <div class="researcher-section__actions">
+      @for (action of content.actions; track action.label) {
+        @if (action.path) {
+          <a class="researcher-section__action" [routerLink]="action.path">
+            <span>{{ action.label }}</span>
+            <span class="researcher-section__action-detail">{{ action.description }}</span>
+          </a>
+        } @else {
+          <div class="researcher-section__action">
+            <span>{{ action.label }}</span>
+            <span class="researcher-section__action-detail">{{ action.description }}</span>
+          </div>
+        }
+      }
+    </div>
+  </section>
+
+  <section class="section-block" aria-labelledby="section-wireframe">
+    <h2 id="section-wireframe">Starter wireframe</h2>
+    <ol class="researcher-section__wireframe">
+      @for (item of content.wireframe; track item) {
+        <li>{{ item }}</li>
+      }
+    </ol>
+  </section>
+</article>

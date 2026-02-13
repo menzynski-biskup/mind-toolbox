@@ -1,0 +1,27 @@
+.researcher-section__actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1rem;
+}
+
+.researcher-section__action {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.9rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(109, 40, 217, 0.2);
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--color-text);
+  box-shadow: var(--shadow-sm);
+  font-weight: 600;
+}
+
+.researcher-section__action-detail {
+  font-weight: 400;
+  color: var(--color-subtle);
+  font-size: 0.85rem;
+}
+
+.researcher-section__wireframe {
+  margin-top: 0.5rem;
+}

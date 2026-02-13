@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
-import { ResearcherDashboardComponent } from './researcher-dashboard';
+import { ResearcherLayoutComponent } from './researcher-layout';
 
-describe('ResearcherDashboard', () => {
-  let component: ResearcherDashboardComponent;
-  let fixture: ComponentFixture<ResearcherDashboardComponent>;
+describe('ResearcherLayout', () => {
+  let component: ResearcherLayoutComponent;
+  let fixture: ComponentFixture<ResearcherLayoutComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ResearcherDashboardComponent],
+      imports: [ResearcherLayoutComponent],
       providers: [provideRouter([])],
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ResearcherDashboardComponent);
+    fixture = TestBed.createComponent(ResearcherLayoutComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
